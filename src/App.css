@@ -1,38 +1,62 @@
-.App {
+.window-container { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.window {
+  width: min(600px, 80%);
+  height: 400px;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+}
+
+/* .navigation {
+  
+} */
+
+.explorer {
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  display: grid;
+  gap: 5px;
+  width: 50%;
+  grid-template-areas: 
+    "HEADER HEADER"
+    "INPUT INPUT"
+    "BUTTON1 BUTTON2"
+  ;
+}
+
+.popup > span {
+  grid-area: HEADER;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.popup > input {
+  grid-area: INPUT;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.popup > button:first-child {
+  grid-area: BUTTON1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.popup > button:last-child {
+  grid-area: BUTTON2;
 }
 
-.App-link {
-  color: #61dafb;
+.context {
+  z-index: 100;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+div {
+  border: 1px solid black;
 }

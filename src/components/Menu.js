@@ -16,8 +16,34 @@ const Menu = (props) => {
 
     const handleMenu = (e) => {
         e.preventDefault();
-        setX(e.pageX);
-        setY(e.pageY);
+
+        // if popup is open, don't open menu
+        if(props.popupOpen) {
+            setShow(false);
+            return;
+        }
+
+        const displayContainer = props.displayInContainer.current;
+        let offsetX = 0;
+        let offsetY = 0; 
+
+        console.log(displayContainer)
+        
+        if(displayContainer){
+            // if click originated outside the desired container, return
+            if(!displayContainer.contains(e.target)){
+                setShow(false);
+                return;
+            }
+
+            offsetX = displayContainer.offsetLeft;
+            offsetY = displayContainer.offsetTop;
+        }
+
+        console.log(e.pageX, offsetX, e.pageY, offsetY);
+        
+        setX(`${e.pageX - offsetX}px`);
+        setY(`${e.pageY - offsetY}px`);
         setShow(true);
     }
 
@@ -40,7 +66,7 @@ const Menu = (props) => {
 
     return (
         show &&
-            <div ref={contextMenuRef} id='context' style={{position: 'absolute', top: y, left: x}}>
+            <div ref={contextMenuRef} className='context' style={{position: 'absolute', top: y, left: x}}>
                 <ul style={{listStyleType: 'none', margin: '0', padding: '0'}}>
                     { items }
                 </ul>

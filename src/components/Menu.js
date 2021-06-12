@@ -7,6 +7,7 @@ const Menu = (props) => {
     const [y, setY] = useState('0px');
     const [show, setShow] = useState(false);
     const [items, setItems] = useState(props.items);
+    const [clickContext, setClickContext] = useState(null);
 
     const contextMenuRef = useRef(null);
 
@@ -17,6 +18,8 @@ const Menu = (props) => {
 
     const handleMenu = (e) => {
         e.preventDefault();
+
+        setClickContext(e);
 
         // if popup is open, don't open menu
         if(props.popupOpen) {
@@ -62,7 +65,7 @@ const Menu = (props) => {
 
     const itemsToDisplay = items.map((item) => 
         <li key={item.id}>
-            <button id={item.id} onClick={item.onClick}>
+            <button id={item.id} onClick={(e) => item.onClick(e, clickContext)}>
                 {item.text}
             </button>
         </li>

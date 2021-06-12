@@ -21,17 +21,17 @@ const Explorer = () => {
         { 
             id: 'DELETE',
             text: 'delete',
-            onClick: (e) => {
-                console.log("Deleting folder...");
+            onClick: (e, clickContext) => {
+                setFolders(folders.filter((folder) => folder.folderName !== clickContext.target.id));
             }
         },
-        { 
-            id: 'RENAME',
-            text: 'rename',
-            onClick: (e) => {
-                console.log("Renaming folder...");
-            }
-        },
+        // { 
+        //     id: 'RENAME',
+        //     text: 'rename',
+        //     onClick: (e) => {
+        //         console.log("Renaming folder...");
+        //     }
+        // },
     ];
 
     const createNewFolder = (folderName) => {

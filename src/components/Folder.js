@@ -2,7 +2,7 @@ import React from 'react'
 
 const Folder = ({folderName}) => {
     return (
-        <div className='folder'>
+        <div id={folderName} className='folder'>
             {folderName}
         </div>
     )

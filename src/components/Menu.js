@@ -12,14 +12,14 @@ const Menu = (props) => {
     const contextMenuRef = useRef(null);
 
     const handleClick = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         setShow(false);
     };
 
     const handleMenu = (e) => {
         e.preventDefault();
 
-        setClickContext(e);
+        setClickContext(e.target);
 
         // if popup is open, don't open menu
         if(props.popupOpen) {
@@ -42,6 +42,7 @@ const Menu = (props) => {
             setItems(props.items.filter((item) => item.id === 'CREATE'));
         } else {
             setItems(props.items);
+            setClickContext(currentElement);
         }
 
         const displayContainer = props.displayInContainer.current;

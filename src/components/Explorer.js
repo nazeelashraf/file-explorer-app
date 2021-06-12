@@ -25,14 +25,14 @@ const Explorer = () => {
             id: 'DELETE',
             text: 'delete',
             onClick: (e, clickContext) => {
-                setFolders(folders.filter((folder) => folder.folderName !== clickContext.target.id));
+                setFolders(folders.filter((folder) => folder.folderName !== clickContext.id));
             }
         },
         { 
             id: 'RENAME',
             text: 'rename',
             onClick: (e, clickContext) => {
-                const folder = folders.filter((folder) => folder.folderName === clickContext.target.id)[0];
+                const folder = folders.filter((folder) => folder.folderName === clickContext.id)[0];
 
                 setMode('rename');
                 setPopupOpen(true);
@@ -43,7 +43,7 @@ const Explorer = () => {
             id: 'DUPLICATE',
             text: 'duplicate',
             onClick: (e, clickContext) => {
-                const folderToDuplicate = folders.filter((folder) => folder.folderName === clickContext.target.id)[0];
+                const folderToDuplicate = folders.filter((folder) => folder.folderName === clickContext.id)[0];
                 const newFolder = JSON.parse(JSON.stringify(folderToDuplicate));
                 newFolder.folderName = `${folderToDuplicate.folderName} (copy)`;
 
@@ -60,7 +60,7 @@ const Explorer = () => {
     ];
 
     const getSortedFolders = (foldersList) => {
-        return foldersList.sort((folder1, folder2) => folder1.folderName > folder2.folderName);
+        return foldersList;//.sort((folder1, folder2) => folder1.folderName > folder2.folderName);
     };
 
     const createNewFolder = (folderName) => {
@@ -112,7 +112,7 @@ const Explorer = () => {
     return (
         <>
             <div className='explorer' ref={explorerRef}>
-                <Directory folders={folders} />
+                <Directory folders={folders} setFolders={setFolders} />
                 { 
                     popupOpen && 
                     <EditFolderPopup 

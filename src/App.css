@@ -77,7 +77,7 @@
 
 .directory {
   display: grid;
-  gap: 10px;
+  gap: 2px;
   grid-template-columns: repeat(4, minmax(100px, 1fr));
   /* margin-bottom: 40px; */
 }
@@ -92,12 +92,8 @@
 .folder > img {
   max-width: 80%;
   height: auto;
+  pointer-events: none;
 }
-
-/* .folder::before {
-  content: url('https://image.flaticon.com/icons/png/512/760/760759.png');
-  background-size: 100% 9px;
-} */
 
 div {
   border: 1px solid black;

@@ -3,7 +3,10 @@ import Folder from './Folder'
 
 const Directory = ({folders}) => {
 
-    const foldersToShow = folders.map((folder) => <Folder key={folder.folderName} folderName={folder.folderName} />);
+    const foldersToShow = folders
+        .map((folder) => 
+            <Folder key={folder.folderName} folderName={folder.folderName} />
+        );
 
     return (
         <div className='directory'>

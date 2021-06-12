@@ -45,8 +45,8 @@ const Menu = (props) => {
                 return;
             }
 
-            offsetX = displayContainer.offsetLeft;
-            offsetY = displayContainer.offsetTop;
+            // offsetX = displayContainer.offsetLeft;
+            // offsetY = displayContainer.offsetTop;
         }
         
         setX(`${e.pageX - offsetX}px`);

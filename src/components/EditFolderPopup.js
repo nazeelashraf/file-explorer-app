@@ -1,8 +1,7 @@
 import {React, useEffect, useRef, useState} from 'react'
 
-const NewFolderPopup = ({ setOpen, createNewFolder }) => {
-
-    const [name, setName] = useState('');
+const EditFolderPopup = ({ setOpen, popupProps }) => {
+    const [name, setName] = useState(popupProps.lastFolder?.folderName || '');
     const [error, setError] = useState('');
     const nameRef = useRef(null);
 
@@ -14,7 +13,7 @@ const NewFolderPopup = ({ setOpen, createNewFolder }) => {
 
     const submitFolderName = () => {
         if(name) {
-            const error = createNewFolder(name);
+            const error = popupProps.callBack(name, popupProps.lastFolder?.folderName);
             if(!error) {
                 setOpen(false);
                 return;
@@ -35,7 +34,7 @@ const NewFolderPopup = ({ setOpen, createNewFolder }) => {
 
     return (
         <div className="popup">
-            <span className="popup-header">Create folder</span>
+            <span className="popup-header">{popupProps.displayText}</span>
             <span className="popup-error">{error}</span>
             <input 
                 ref={nameRef}
@@ -46,9 +45,9 @@ const NewFolderPopup = ({ setOpen, createNewFolder }) => {
                 placeholder={placeholder}
             />
             <button onClick={() => setOpen(false)}>Close</button>
-            <button disabled={error || !name} onClick={submitFolderName}>Create</button>
+            <button disabled={error || !name} onClick={submitFolderName}>{popupProps.submitText}</button>
         </div>
     )
 }
 
-export default NewFolderPopup
+export default EditFolderPopup

@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import Directory from './Directory';
 import Menu from './Menu'
 import NewFolderPopup from './NewFolderPopup';
 
@@ -6,6 +7,7 @@ import NewFolderPopup from './NewFolderPopup';
 const Explorer = () => {
 
     const [popupOpen, setPopupOpen] = useState(false);
+    const [folders, setFolders] = useState([]);
     const explorerRef = useRef(null);
 
     const contextItems = [
@@ -23,13 +25,44 @@ const Explorer = () => {
                 console.log("Deleting folder...");
             }
         },
+        { 
+            id: 'RENAME',
+            text: 'rename',
+            onClick: (e) => {
+                console.log("Renaming folder...");
+            }
+        },
     ];
+
+    const createNewFolder = (folderName) => {
+
+        const folderExists = folders.some((folder) => folder.folderName === folderName);
+
+        if(folderExists)
+            return `Folder with name ${folderName} already exists`;
+
+        const newFolder = {
+            folderName
+        }
+        setFolders([...folders, newFolder]);
+    };
 
     return (
         <div className='explorer' ref={explorerRef}>
-            Explorer
-            <Menu items={contextItems} displayInContainer={explorerRef} popupOpen={popupOpen} />
-            { popupOpen && <NewFolderPopup setOpen={ setPopupOpen } /> }
+            <Directory folders={folders} />
+            <Menu 
+                items={contextItems} 
+                displayInContainer={explorerRef} 
+                popupOpen={popupOpen} 
+                
+            />
+            { 
+                popupOpen && 
+                <NewFolderPopup 
+                    setOpen={ setPopupOpen }
+                    createNewFolder={ createNewFolder } 
+                /> 
+            }
         </div>
     )
 }

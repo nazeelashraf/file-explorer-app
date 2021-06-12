@@ -6,6 +6,7 @@ const Menu = (props) => {
     const [x, setX] = useState('0px');
     const [y, setY] = useState('0px');
     const [show, setShow] = useState(false);
+    const [items, setItems] = useState(props.items);
 
     const contextMenuRef = useRef(null);
 
@@ -23,11 +24,16 @@ const Menu = (props) => {
             return;
         }
 
+        // remove items if folder is not right-clicked on
+        if(!e.target.classList.contains('folder')) {
+            setItems(props.items.filter((item) => item.id === 'CREATE'));
+        } else {
+            setItems(props.items.filter((item) => item.id !== 'CREATE'));
+        }
+
         const displayContainer = props.displayInContainer.current;
         let offsetX = 0;
-        let offsetY = 0; 
-
-        console.log(displayContainer)
+        let offsetY = 0;
         
         if(displayContainer){
             // if click originated outside the desired container, return
@@ -39,8 +45,6 @@ const Menu = (props) => {
             offsetX = displayContainer.offsetLeft;
             offsetY = displayContainer.offsetTop;
         }
-
-        console.log(e.pageX, offsetX, e.pageY, offsetY);
         
         setX(`${e.pageX - offsetX}px`);
         setY(`${e.pageY - offsetY}px`);
@@ -56,7 +60,7 @@ const Menu = (props) => {
         }
     });
 
-    const items = props.items.map((item) => 
+    const itemsToDisplay = items.map((item) => 
         <li key={item.id}>
             <button id={item.id} onClick={item.onClick}>
                 {item.text}
@@ -68,7 +72,7 @@ const Menu = (props) => {
         show &&
             <div ref={contextMenuRef} className='context' style={{position: 'absolute', top: y, left: x}}>
                 <ul style={{listStyleType: 'none', margin: '0', padding: '0'}}>
-                    { items }
+                    { itemsToDisplay }
                 </ul>
             </div>
     )

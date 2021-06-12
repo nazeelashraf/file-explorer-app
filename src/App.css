@@ -26,17 +26,30 @@
   top: 25%;
   display: grid;
   gap: 5px;
-  width: 50%;
+  max-width: 50%;
+  background-color: white;
   grid-template-areas: 
     "HEADER HEADER"
+    "ERROR ERROR"
     "INPUT INPUT"
     "BUTTON1 BUTTON2"
   ;
 }
 
-.popup > span {
+.popup > * {
+  width: auto;
+}
+
+.popup > .popup-header {
   grid-area: HEADER;
   text-align: center;
+}
+
+.popup > .popup-error {
+  grid-area: ERROR;
+  text-align: center;
+  color: red;
+  font-size: 12px;
 }
 
 .popup > input {
@@ -55,7 +68,14 @@
   z-index: 100;
 }
 
+.directory {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+}
 
+.folder {
+  height: 100px;
+}
 
 div {
   border: 1px solid black;

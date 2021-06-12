@@ -15,7 +15,7 @@ const Explorer = () => {
     const contextItems = [
         { 
             id: 'CREATE',
-            text: 'create',
+            text: 'New Folder',
             onClick: (e) => {
                 setMode('create');
                 setPopupOpen(true);
@@ -23,14 +23,14 @@ const Explorer = () => {
         },
         { 
             id: 'DELETE',
-            text: 'delete',
+            text: 'Delete',
             onClick: (e, clickContext) => {
                 setFolders(folders.filter((folder) => folder.folderName !== clickContext.id));
             }
         },
         { 
             id: 'RENAME',
-            text: 'rename',
+            text: 'Rename...',
             onClick: (e, clickContext) => {
                 const folder = folders.filter((folder) => folder.folderName === clickContext.id)[0];
 
@@ -41,7 +41,7 @@ const Explorer = () => {
         },
         { 
             id: 'DUPLICATE',
-            text: 'duplicate',
+            text: 'Duplicate',
             onClick: (e, clickContext) => {
                 const folderToDuplicate = folders.filter((folder) => folder.folderName === clickContext.id)[0];
                 const newFolder = JSON.parse(JSON.stringify(folderToDuplicate));

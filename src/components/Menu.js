@@ -12,7 +12,7 @@ const Menu = (props) => {
     const contextMenuRef = useRef(null);
 
     const handleClick = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         setShow(false);
     };
 
@@ -76,8 +76,8 @@ const Menu = (props) => {
 
     return (
         show &&
-            <div ref={contextMenuRef} className='context' style={{position: 'absolute', top: y, left: x}}>
-                <ul style={{listStyleType: 'none', margin: '0', padding: '0'}}>
+            <div ref={contextMenuRef} className='context' style={{top: y, left: x}}>
+                <ul className='list'>
                     { itemsToDisplay }
                 </ul>
             </div>

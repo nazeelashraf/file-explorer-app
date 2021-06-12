@@ -44,8 +44,8 @@ const EditFolderPopup = ({ setOpen, popupProps }) => {
                 onKeyUp={keyUp}
                 placeholder={placeholder}
             />
-            <button onClick={() => setOpen(false)}>Close</button>
-            <button disabled={error || !name} onClick={submitFolderName}>{popupProps.submitText}</button>
+            <button className='cancel' onClick={() => setOpen(false)}>Close</button>
+            <button className='action' disabled={error || !name} onClick={submitFolderName}>{popupProps.submitText}</button>
         </div>
     )
 }

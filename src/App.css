@@ -1,3 +1,12 @@
+:root {
+  --main-color: #2c3e50;
+  --accent-color: #7f8c8d;
+  --tertiary-color: #34495e;
+  --red-color: #e74c3c;
+  --yellow-color: #f1c40f;
+  --green-color: #2ecc71;
+}
+
 .window-container { 
   display: flex;
   justify-content: center;
@@ -10,11 +19,17 @@
   height: 400px;
   display: grid;
   grid-template-columns: 150px 1fr;
+  background-color: var(--main-color);
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px #95a5a6;
+  overflow: hidden;
 }
 
-/* .navigation {
+.navigation {
+  padding: 10px;
+  background-color: var(--accent-color);
   
-} */
+}
 
 .explorer {
   position: relative;
@@ -25,18 +40,23 @@
 
 .popup {
   position: absolute;
-  left: 25%;
+  left: 20%;
   top: 25%;
+
   display: grid;
-  gap: 5px;
-  max-width: 60%;
-  background-color: white;
+  gap: 10px;
   grid-template-areas: 
     "HEADER HEADER"
     "ERROR ERROR"
     "INPUT INPUT"
     "BUTTON1 BUTTON2"
   ;
+
+  max-width: 60%;
+  background-color: var(--tertiary-color);
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 4px black;
 }
 
 .popup > * {
@@ -46,40 +66,113 @@
 .popup > .popup-header {
   grid-area: HEADER;
   text-align: center;
+  color: white;
 }
 
 .popup > .popup-error {
   grid-area: ERROR;
   text-align: center;
-  color: red;
+  color: var(--red-color);
   font-size: 12px;
 }
 
 .popup > input {
   grid-area: INPUT;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  padding: 10px;
+  color: white;
 }
 
-.popup > button:first-child {
+.popup > button {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: white;
+}
+
+.popup > button.cancel {
   grid-area: BUTTON1;
+  background-color: var(--accent-color);
+  color: white;
 }
 
-.popup > button:last-child {
+.popup > button.action {
   grid-area: BUTTON2;
+  background-color: var(--green-color);
+  color: white;
+}
+
+.popup > button {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: white;
+}
+
+.popup > button:hover:not(:disabled) {
+  box-shadow: 0px 0px 4px black;
+}
+
+.popup > button:disabled {
+  opacity: 0.5;
 }
 
 .context {
+  position: absolute;
   z-index: 100;
 }
 
+.context {
+  padding: 10px 0px;
+  background-color: var(--tertiary-color);
+  box-shadow: 0px 0px 4px black;
+  border-radius: 5px;
+}
+
 .context button {
+  min-width: 150px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  text-align: left;
+}
+
+.context button:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.li-margin-bottom {
+  margin-bottom: 6px;
+} 
+
+.nav-button {
   width: 100%;
+  color: white;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 5px 5px 20px;
+  min-width: 100px;
+  text-align: left;
+}
+
+.navigation button.active {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .directory {
   display: grid;
   gap: 2px;
   grid-template-columns: repeat(4, minmax(100px, 1fr));
-  /* margin-bottom: 40px; */
 }
 
 .folder {
@@ -87,6 +180,7 @@
   min-height: 100px;
   word-wrap: break-word;
   text-align: center;
+  user-select: none;
 }
 
 .folder > img {
@@ -95,9 +189,34 @@
   pointer-events: none;
 }
 
-div {
-  border: 1px solid black;
+.folder > div {
+  color: white;
 }
+
+.circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+
+.red-circle {
+  background-color: var(--red-color);
+}
+
+.amber-circle {
+  background-color: var(--yellow-color);
+}
+
+.green-circle {
+  background-color: var(--green-color);
+}
+
+/* div {
+  border: 1px solid black;
+} */
 
 @media (max-width: 720px) {
   .directory {
@@ -108,6 +227,6 @@ div {
   .popup {
     display: flex;
     flex-flow: column;
-    left: 20%;
+    left: 12%;
   }
 }

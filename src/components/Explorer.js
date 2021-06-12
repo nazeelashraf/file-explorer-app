@@ -124,8 +124,7 @@ const Explorer = () => {
             <Menu 
                 items={contextItems} 
                 displayInContainer={explorerRef} 
-                popupOpen={popupOpen} 
-                
+                popupOpen={popupOpen}
             />
         </>
     )

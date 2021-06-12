@@ -27,30 +27,32 @@ const Menu = (props) => {
             return;
         }
 
+        // check if folder is right clicked
+        let currentElement = e.target;
+        let isFolder = false;
+
+        while(currentElement) {
+            isFolder = currentElement.classList.contains('folder');
+            if(isFolder) break;
+            currentElement = currentElement.parentElement;
+        }
+
         // remove items if folder is not right-clicked on
-        if(!e.target.classList.contains('folder')) {
+        if(!isFolder) {
             setItems(props.items.filter((item) => item.id === 'CREATE'));
         } else {
-            setItems(props.items.filter((item) => item.id !== 'CREATE'));
+            setItems(props.items);
         }
 
         const displayContainer = props.displayInContainer.current;
-        let offsetX = 0;
-        let offsetY = 0;
-        
-        if(displayContainer){
-            // if click originated outside the desired container, return
-            if(!displayContainer.contains(e.target)){
-                setShow(false);
-                return;
-            }
-
-            // offsetX = displayContainer.offsetLeft;
-            // offsetY = displayContainer.offsetTop;
+        // if click originated outside the desired container, return
+        if(displayContainer && !displayContainer.contains(e.target)){
+            setShow(false);
+            return;
         }
         
-        setX(`${e.pageX - offsetX}px`);
-        setY(`${e.pageY - offsetY}px`);
+        setX(`${e.pageX}px`);
+        setY(`${e.pageY}px`);
         setShow(true);
     }
 

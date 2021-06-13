@@ -24,7 +24,12 @@ const EditFolderPopup = ({ setOpen, popupProps }) => {
 
     const updateName = (e) => {
         error && setError('');
-        setName(e.target.value);
+        let newName = e.target.value;
+        if(newName && newName.includes('/')) {
+            setError("Cannot use '/' in folder name");
+            return;
+        }
+        setName(newName);
     }
 
     const keyUp = (e) => {

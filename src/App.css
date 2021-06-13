@@ -244,10 +244,6 @@
   background-color: var(--green-color);
 }
 
-/* div {
-  border: 1px solid black;
-} */
-
 @media (max-width: 720px) {
   .directory {
     display: grid;

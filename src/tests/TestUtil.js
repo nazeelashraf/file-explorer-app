@@ -89,7 +89,7 @@ export const dragAndDrop = (elemDrag, elemDrop) => {
         fireMouseEvent('mousedown', elemDrag, center1X, center1Y);
 
         // start dragging process over to drop target
-        const dragStarted = fireMouseEvent(
+        fireMouseEvent(
             'dragstart',
             elemDrag,
             center1X,

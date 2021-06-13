@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { PopupContext } from './Explorer';
 import Folder from './Folder'
 
 const Directory = ({folders, setFolders}) => {
+    
+    const [popupOpen] = useContext(PopupContext);
 
     const foldersToShow = folders
         .map((folder) => 
@@ -9,6 +12,8 @@ const Directory = ({folders, setFolders}) => {
     );
 
     const handleDrop = (e) => {
+        if(popupOpen) return;
+        
         const origin = e.dataTransfer.getData("id");
         const target = e.target.id;
 

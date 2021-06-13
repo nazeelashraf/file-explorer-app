@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
+import { PopupContext } from './Explorer';
 import { ActiveFolderContext } from './Window';
 
 const Folder = ({folderName}) => {
 
     const [active, setActive] = useContext(ActiveFolderContext);
+    const [popupOpen] = useContext(PopupContext);
 
     const handleDrag = (e, data) => {
         e.dataTransfer.setData("id", data);
@@ -12,8 +14,8 @@ const Folder = ({folderName}) => {
     return (
         <div 
             draggable='true' 
-            onDragStart={(e) => handleDrag(e, folderName)}
-            onClick={() => setActive([active, '/', folderName].join(''))}
+            onDragStart={(e) => !popupOpen && handleDrag(e, folderName)}
+            onClick={() => !popupOpen && setActive([active, '/', folderName].join(''))}
             id={folderName} 
             className='folder'
         >

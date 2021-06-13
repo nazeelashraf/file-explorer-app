@@ -5,7 +5,8 @@ import EditFolderPopup from './EditFolderPopup';
 import DirectoryHeader from './DirectoryHeader';
 import { ActiveFolderContext } from './Window';
 
-export const ClipboardContext = React.createContext({});
+export const ClipboardContext = React.createContext();
+export const PopupContext = React.createContext();
 
 const Explorer = (props) => {
 
@@ -152,7 +153,9 @@ const Explorer = (props) => {
         <ClipboardContext.Provider value={[clipboard, setClipboard]}>
             <div className='explorer' ref={explorerRef}>
                 <DirectoryHeader active={active} setActive={setActive}/>
-                <Directory folders={folders} setFolders={updateFolders} />
+                <PopupContext.Provider value={[popupOpen, setPopupOpen]}>
+                    <Directory folders={folders} setFolders={updateFolders} />
+                </PopupContext.Provider>
                 { 
                     popupOpen && 
                     <EditFolderPopup 

@@ -88,6 +88,7 @@
   border-radius: 5px;
   padding: 5px;
   background-color: white;
+  cursor: pointer;
 }
 
 .popup > button.cancel {
@@ -115,6 +116,7 @@
 
 .popup > button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .context {

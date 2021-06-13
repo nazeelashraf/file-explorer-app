@@ -1,5 +1,6 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import { PropTypes } from 'prop-types';
+import { ClipboardContext } from './Explorer';
 
 const Menu = (props) => {
 
@@ -10,6 +11,8 @@ const Menu = (props) => {
     const [clickContext, setClickContext] = useState(null);
 
     const contextMenuRef = useRef(null);
+
+    const [clipboard] = useContext(ClipboardContext);
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -39,9 +42,9 @@ const Menu = (props) => {
 
         // remove items if folder is not right-clicked on
         if(!isFolder) {
-            setItems(props.items.filter((item) => item.id === 'CREATE'));
+            setItems(props.items.filter((item) => item.id === 'CREATE' || (clipboard && item.id === 'PASTE')));
         } else {
-            setItems(props.items);
+            setItems(props.items.filter((item) => item.id !== 'PASTE'));
             setClickContext(currentElement);
         }
 

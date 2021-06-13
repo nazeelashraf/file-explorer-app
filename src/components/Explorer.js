@@ -5,6 +5,7 @@ import EditFolderPopup from './EditFolderPopup';
 import DirectoryHeader from './DirectoryHeader';
 import { ActiveFolderContext } from './Window';
 
+export const ClipboardContext = React.createContext({});
 
 const Explorer = (props) => {
 
@@ -13,6 +14,7 @@ const Explorer = (props) => {
     const [popupOpen, setPopupOpen] = useState(false);
     const [mode, setMode] = useState('');
     const [currentFolder, setCurrentFolder] = useState(null);
+    const [clipboard, setClipboard] = useState();
     
     const explorerRef = useRef(null);
     const [active, setActive] = useContext(ActiveFolderContext);
@@ -49,20 +51,55 @@ const Explorer = (props) => {
             text: 'Duplicate',
             onClick: (e, clickContext) => {
                 const folderToDuplicate = folders.filter((folder) => folder.folderName === clickContext.id)[0];
-                const newFolder = JSON.parse(JSON.stringify(folderToDuplicate));
-                newFolder.folderName = `${folderToDuplicate.folderName} (copy)`;
-
-                let folderExists = folders.some((folder) => folder.folderName === newFolder.folderName);
-
-                while(folderExists) {
-                    newFolder.folderName = `${newFolder.folderName} (copy)`;
-                    folderExists = folders.some((folder) => folder.folderName === newFolder.folderName);
-                }
+                
+                const newFolder = duplicateFolder(folderToDuplicate);
 
                 updateFolders([...folders, newFolder]);
             }
         },
+        { 
+            id: 'CUT',
+            text: 'Cut',
+            onClick: (e, clickContext) => {
+                const folderToCut = folders.filter((folder) => folder.folderName === clickContext.id)[0];
+                setClipboard(folderToCut);
+                updateFolders(folders.filter((folder) => folder.folderName !== clickContext.id));
+            }
+        },
+        { 
+            id: 'COPY',
+            text: 'Copy',
+            onClick: (e, clickContext) => {
+                const folderToCut = folders.filter((folder) => folder.folderName === clickContext.id)[0];
+                setClipboard(folderToCut);
+            }
+        },
+        { 
+            id: 'PASTE',
+            text: 'Paste',
+            onClick: (e, clickContext) => {
+
+                updateFolders([...folders, duplicateFolder(clipboard)]);
+                setClipboard();
+            }
+        },
     ];
+
+    const duplicateFolder = (folderToDuplicate) => {
+        const newFolder = JSON.parse(JSON.stringify(folderToDuplicate));
+        newFolder.folderName = `${folderToDuplicate.folderName}`;
+
+        let folderExists = folders.some((folder) => folder.folderName === newFolder.folderName);
+
+        if(folderExists) newFolder.folderName = `${newFolder.folderName}`;
+
+        while(folderExists) {
+            newFolder.folderName = `${newFolder.folderName} (copy)`;
+            folderExists = folders.some((folder) => folder.folderName === newFolder.folderName);
+        }
+
+        return newFolder;
+    }
 
     const createNewFolder = (folderName) => {
 
@@ -94,7 +131,7 @@ const Explorer = (props) => {
         const newFolders = folders.filter((folder) => folder.folderName !== folderName);
         const folderToUpdate = folders.filter((folder) => folder.folderName === folderName);
         
-        updateFolders([...newFolders, { ...folderToUpdate, folderName: newName }]);
+        updateFolders([...newFolders, { ...folderToUpdate, folderName: newName, folders: [] }]);
     };
 
     const popupProps = {
@@ -112,7 +149,7 @@ const Explorer = (props) => {
     }
 
     return (
-        <>
+        <ClipboardContext.Provider value={[clipboard, setClipboard]}>
             <div className='explorer' ref={explorerRef}>
                 <DirectoryHeader active={active} setActive={setActive}/>
                 <Directory folders={folders} setFolders={updateFolders} />
@@ -129,7 +166,7 @@ const Explorer = (props) => {
                 displayInContainer={explorerRef} 
                 popupOpen={popupOpen}
             />
-        </>
+        </ClipboardContext.Provider>
     )
 }
 

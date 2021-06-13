@@ -43,8 +43,6 @@ const Window = () => {
             currentFolderList = currentFolderList.folders[folderIndexToUpdate];
         });
 
-        console.log("currentFolderList: ", currentFolderList);
-
         if(JSON.stringify(currentFolderList.folders) === JSON.stringify(folders))
             return;
 

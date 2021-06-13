@@ -27,8 +27,6 @@ const Directory = ({folders, setFolders}) => {
             ];
             setFolders(newFolders);
         }
-
-        // console.log(`${e.dataTransfer.getData("id")} -> ${e.target.id}`);
         
     }
 

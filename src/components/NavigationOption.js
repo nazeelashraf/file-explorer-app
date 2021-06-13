@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ActiveFolderContext } from './Window';
 
 const NavigationOption = (props) => {
-    const activeClass = props.active===props.option.name ? 'active' : '';
+    
+    const [active, setActive] = useContext(ActiveFolderContext);
+
+    const activeClass = active.split('/')[0]===props.option.folderName ? 'active' : '';
     return (
         <li className='li-margin-bottom'>
             <button 
                 className={`${activeClass} nav-button`}
-                onClick={() => props.setActive(props.option.name)}
+                onClick={() => setActive(props.option.folderName)}
             >
-                {props.option.name}
+                {props.option.folderName}
             </button>
         </li>
     )

@@ -1,22 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ActiveFolderContext } from './Window';
 
 const Folder = ({folderName}) => {
 
+    const [active, setActive] = useContext(ActiveFolderContext);
 
     const handleDrag = (e, data) => {
         e.dataTransfer.setData("id", data);
     }
 
-    // const handleDrop = (e) => {
-    // }
-
     return (
         <div 
-
             draggable='true' 
             onDragStart={(e) => handleDrag(e, folderName)}
-            // onDragOver={(e) => handleDrop(e)}
-            // onDragEnd={(e) => setHidden(false)}
+            onClick={() => setActive([active, '/', folderName].join(''))}
             id={folderName} 
             className='folder'
         >

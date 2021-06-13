@@ -1,16 +1,21 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import Directory from './Directory';
 import Menu from './Menu'
 import EditFolderPopup from './EditFolderPopup';
+import DirectoryHeader from './DirectoryHeader';
+import { ActiveFolderContext } from './Window';
 
 
-const Explorer = () => {
+const Explorer = (props) => {
+
+    const { folders, updateFolders } = props;
 
     const [popupOpen, setPopupOpen] = useState(false);
-    const [folders, setFolders] = useState([{folderName: 'Music'}]);
     const [mode, setMode] = useState('');
-    const [currentFolder, setCurrentFolder] = useState(null)
+    const [currentFolder, setCurrentFolder] = useState(null);
+    
     const explorerRef = useRef(null);
+    const [active, setActive] = useContext(ActiveFolderContext);
 
     const contextItems = [
         { 
@@ -25,7 +30,7 @@ const Explorer = () => {
             id: 'DELETE',
             text: 'Delete',
             onClick: (e, clickContext) => {
-                setFolders(folders.filter((folder) => folder.folderName !== clickContext.id));
+                updateFolders(folders.filter((folder) => folder.folderName !== clickContext.id));
             }
         },
         { 
@@ -54,14 +59,10 @@ const Explorer = () => {
                     folderExists = folders.some((folder) => folder.folderName === newFolder.folderName);
                 }
 
-                setFolders(getSortedFolders([...folders, newFolder]));
+                updateFolders([...folders, newFolder]);
             }
         },
     ];
-
-    const getSortedFolders = (foldersList) => {
-        return foldersList;//.sort((folder1, folder2) => folder1.folderName > folder2.folderName);
-    };
 
     const createNewFolder = (folderName) => {
 
@@ -71,9 +72,10 @@ const Explorer = () => {
             return `A folder with name ${folderName} already exists`;
 
         const newFolder = {
-            folderName
+            folderName,
+            folders: []
         }
-        setFolders(getSortedFolders([...folders, newFolder]));
+        updateFolders([...folders, newFolder]);
     };
 
     const renameFolder = (newName, folderName) => {
@@ -92,7 +94,7 @@ const Explorer = () => {
         const newFolders = folders.filter((folder) => folder.folderName !== folderName);
         const folderToUpdate = folders.filter((folder) => folder.folderName === folderName);
         
-        setFolders(getSortedFolders([...newFolders, { ...folderToUpdate, folderName: newName }]));
+        updateFolders([...newFolders, { ...folderToUpdate, folderName: newName }]);
     };
 
     const popupProps = {
@@ -112,7 +114,8 @@ const Explorer = () => {
     return (
         <>
             <div className='explorer' ref={explorerRef}>
-                <Directory folders={folders} setFolders={setFolders} />
+                <DirectoryHeader active={active} setActive={setActive}/>
+                <Directory folders={folders} setFolders={updateFolders} />
                 { 
                     popupOpen && 
                     <EditFolderPopup 

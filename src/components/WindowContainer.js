@@ -4,7 +4,7 @@ import Window from './Window';
 const WindowContainer = () => {
     
     return (
-        <div className="window-container">
+        <div className="window-container" data-testid="window-container">
             <Window />
         </div>
     )

@@ -38,9 +38,9 @@ const EditFolderPopup = ({ setOpen, popupProps }) => {
     }
 
     return (
-        <div className="popup">
+        <div className="popup" data-testid='popup'>
             <span className="popup-header">{popupProps.displayText}</span>
-            <span className="popup-error">{error}</span>
+            <span className="popup-error" data-testid='popup-error'>{error}</span>
             <input 
                 ref={nameRef}
                 type='text'
@@ -48,9 +48,21 @@ const EditFolderPopup = ({ setOpen, popupProps }) => {
                 onChange={updateName} 
                 onKeyUp={keyUp}
                 placeholder={placeholder}
+                data-testid='input'
             />
-            <button className='cancel' onClick={() => setOpen(false)}>Close</button>
-            <button className='action' disabled={error || !name} onClick={submitFolderName}>{popupProps.submitText}</button>
+            <button 
+                className='cancel' 
+                onClick={() => setOpen(false)}
+                data-testid='cancel'
+            >Close</button>
+            <button 
+                className='action' 
+                disabled={error || !name} 
+                onClick={submitFolderName}
+                data-testid='action'
+            >
+                {popupProps.submitText}
+            </button>
         </div>
     )
 }

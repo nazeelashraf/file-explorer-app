@@ -1,20 +1,26 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { PopupContext } from './Explorer';
-import Folder from './Folder'
+import Folder from './Folder';
 
 const Directory = ({folders, setFolders}) => {
     
+    const [draggedFolderName, setDraggedFolderName] = useState('Test');
+
     const [popupOpen] = useContext(PopupContext);
 
     const foldersToShow = folders
         .map((folder) => 
-            <Folder key={folder.folderName} folderName={folder.folderName} />
+            <Folder 
+                key={folder.folderName} 
+                folderName={folder.folderName} 
+                setDraggedFolderName={setDraggedFolderName}
+            />
     );
 
     const handleDrop = (e) => {
         if(popupOpen) return;
         
-        const origin = e.dataTransfer.getData("id");
+        const origin = draggedFolderName;
         const target = e.target.id;
 
         if(!target || target === origin) return;
@@ -40,6 +46,7 @@ const Directory = ({folders, setFolders}) => {
             className='directory'
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => handleDrop(e)}
+            data-testid='directory'
         >
             { foldersToShow }
         </div>

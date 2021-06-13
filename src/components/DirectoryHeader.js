@@ -8,11 +8,17 @@ const DirectoryHeader = ({active, setActive}) => {
     }
 
     const breadcrumbs = active.split('/').map((breadcrumb, index) => 
-        <button key={breadcrumb} onClick={()=>{setNavigation(index)}}>{breadcrumb}</button>
+        <button 
+            key={breadcrumb} 
+            onClick={()=>{setNavigation(index)}}
+            data-testid={`breadcrumb-${breadcrumb}`}
+        >
+            {breadcrumb}
+        </button>
     )
     
     return (
-        <div className='directory-header'>
+        <div className='directory-header' data-testid='directory-header'>
             {breadcrumbs}
         </div>
     )

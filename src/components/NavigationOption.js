@@ -11,6 +11,7 @@ const NavigationOption = (props) => {
             <button 
                 className={`${activeClass} nav-button`}
                 onClick={() => setActive(props.option.folderName)}
+                data-testid={`nav-${props.option.folderName}`}
             >
                 {props.option.folderName}
             </button>

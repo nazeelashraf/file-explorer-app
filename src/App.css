@@ -218,6 +218,8 @@ body {
 
 .folder:hover {
   cursor: pointer;
+  background-color: var(--tertiary-color);
+  border-radius: 10px;
 }
 
 .folder > img {

@@ -8,7 +8,7 @@ const Navigation = (props) => {
     );
 
     return (
-        <div className='navigation'>
+        <div className='navigation' data-testid='navigation'>
             <div>
                 <div className='circle red-circle'></div>
                 <div className='circle amber-circle'></div>

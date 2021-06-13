@@ -32,7 +32,7 @@ const Window = () => {
         setActiveFolder(folderToNavigate);
     }, [active, navigationOptions]);
 
-    const updateFolders = (folders, activeDirectory) => {
+    const updateFolders = (folders) => {
         const newDirectory = { folders: [...navigationOptions.folders] };
         const breadcrumbs = active.split('/');
         let folderIndexToUpdate = -1;
@@ -53,7 +53,7 @@ const Window = () => {
 
     return (
         <ActiveFolderContext.Provider value={[active, setActive]}>
-            <div className="window">
+            <div className="window" data-testid='window'>
                 <Navigation options={navigationOptions.folders}/>
                 <Explorer folders={activeFolder.folders} updateFolders={updateFolders}/>
             </div>

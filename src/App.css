@@ -137,6 +137,7 @@
   border: none;
   color: white;
   text-align: left;
+  font-size: 16px;
 }
 
 .context button:hover {

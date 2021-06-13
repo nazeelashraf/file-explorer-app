@@ -92,9 +92,52 @@ test('clicking "New folder" context opens new folder popup', () => {
 
 test('inputs folder name and creates new folder', () => {
   renderApp(container);
+
   createFolder('Test');
+
   const folder = screen.getByTestId('folder-Test');
   expect(folder).toBeInTheDocument();
+});
+
+test('inputs folder name and hits enter to create new folder', () => {
+  renderApp(container);
+
+  const clickContext = screen.getByTestId('directory');
+  doRightClick(clickContext);
+
+  const create = screen.getByTestId('context-CREATE');
+  userEvent.click(create);
+
+  const input = screen.getByTestId('input');
+  expect(input).toBeInTheDocument();
+  userEvent.type(input, 'TestWithEnter');
+  act(() => {
+    input.dispatchEvent(new KeyboardEvent("keyup", {bubbles: true, key: 'Enter'}))
+  });
+
+  const folder = screen.getByTestId('folder-TestWithEnter');
+  expect(folder).toBeInTheDocument();
+});
+
+test('opens popup and hits escape to close popup', () => {
+  renderApp(container);
+
+  const clickContext = screen.getByTestId('directory');
+  doRightClick(clickContext);
+
+  const create = screen.getByTestId('context-CREATE');
+  userEvent.click(create);
+
+  const popup = screen.getByTestId('popup');
+  expect(popup).toBeInTheDocument();
+  const input = screen.getByTestId('input');
+  expect(input).toBeInTheDocument();
+
+  act(() => {
+    input.dispatchEvent(new KeyboardEvent("keyup", {bubbles: true, key: 'Escape'}))
+  });
+  
+  expect(popup).not.toBeInTheDocument();
 });
 
 test('inputs existing folder name and cannot create new folder', () => {
@@ -163,8 +206,8 @@ test('inputs "/" in folder name and removes error', () => {
 
   userEvent.clear(input);
   userEvent.type(input, 'Test');
-  expect(popupError).not.toBeInTheDocument();
   expect(action).toBeEnabled();
+  expect(popupError).not.toHaveTextContent();
 
 });
 

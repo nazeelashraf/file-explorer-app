@@ -95,9 +95,6 @@ export const dragAndDrop = (elemDrag, elemDrop) => {
             center1X,
             center1Y
         );
-        if (!dragStarted) {
-            return;
-        }
 
         fireMouseEvent('drag', elemDrag, center1X, center1Y);
         fireMouseEvent('mousemove', elemDrag, center1X, center1Y);
